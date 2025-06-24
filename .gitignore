@@ -1,0 +1,21 @@
+# Ignore Visual Studio temporary files, build results, and user-specific files
+.vs/
+*.user
+*.suo
+
+# Ignore build results
+bin/
+obj/
+
+# Ignore packages
+packages/
+
+# Ignore config transforms
+*.Transform.cs
+
+# Others
+*.log
+*.vsidx
+*.dbmdl
+*.userosscache
+*.sln.docstates
