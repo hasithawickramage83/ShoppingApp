@@ -30,6 +30,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: webapp2          # e.g. aiswebapps
+          app-name: webapp2-d3ctggfqdaakgzfn         # e.g. aiswebapps
           slot-name: Production
           package: ./publish
