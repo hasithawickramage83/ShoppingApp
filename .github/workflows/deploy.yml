@@ -1,35 +1,35 @@
-name: Deploy ASP.NET Core .NET 9 App to Azure (Windows)
+name: Deploy ASP.NET Core App to Azure
 
 on:
   push:
     branches:
-      - main
+      - main  # change this if your default branch is different
 
 jobs:
   build-and-deploy:
-    runs-on: windows-latest  # ✅ Use Windows runner
+    runs-on: windows-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup .NET 9 SDK
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '9.0.x'  # or 8.0.x, adjust based on your project
 
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Build the app
-        run: dotnet build --configuration Release --no-restore
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Publish the app
-        run: dotnet publish --configuration Release --output ./publish
+        run: |
+          dotnet publish -c Release -o ./publish
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: webapp2  # ✅ Your actual Azure App Service name
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          app-name: webapp2          # e.g. aiswebapps
+          slot-name: Production
           package: ./publish
