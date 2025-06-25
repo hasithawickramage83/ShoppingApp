@@ -1,13 +1,13 @@
-name: Deploy ASP.NET Core .NET 9 App to Azure
+name: Deploy ASP.NET Core .NET 9 App to Azure (Windows)
 
 on:
   push:
     branches:
-      - main  # Triggers the workflow on push to main
+      - main
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest  # ✅ Use Windows runner
 
     steps:
       - name: Checkout code
@@ -16,7 +16,7 @@ jobs:
       - name: Setup .NET 9 SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'  # Target .NET 9 preview
+          dotnet-version: '9.0.x'
 
       - name: Restore dependencies
         run: dotnet restore
@@ -30,6 +30,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: webapp2  # Replace with your App Service name
+          app-name: webapp2  # ✅ Your actual Azure App Service name
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ./publish
