@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      dotnet: 9.0
+  build:
+    commands:
+      - dotnet restore
+      - dotnet publish -c Release -o ./publish
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: publish
