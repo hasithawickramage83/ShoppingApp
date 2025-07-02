@@ -1,12 +1,20 @@
 version: '3.8'
 
 services:
-  webapp:
-    image: ${DOCKER_REGISTRY-}shoppingapp
-    build:
-      context: .
-      dockerfile: Dockerfile
+  web:
+    build: .
     ports:
-      - "8080:80"
+      - "80:80"
+    depends_on:
+      - db
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=db;Database=ShoppingDb;User=sa;Password=p@55w0rd
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "p@55w0rd"
+      ACCEPT_EULA: "Y"
